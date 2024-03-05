@@ -1,5 +1,6 @@
 import Cliente from "../modelos/cliente";
 import Endereco from "../modelos/endereco";
+import Telefone from "../modelos/telefone";
 let cliente = new Cliente()
 cliente.nome = `Pedro de Alcântara João Carlos Leopoldo Salvador`
 cliente.nomeSocial = `Dom Pedro II`
@@ -13,6 +14,14 @@ endereco.estado = `Rio de Janeiro`
 endereco.pais = `Brasil`
 endereco.codigoPostal = `22220-000`
 cliente.endereco = endereco
+let telefone1 = new Telefone()
+telefone1.ddd = '12'
+telefone1.numero = '912345678'
+cliente.telefones.push(telefone1)
+let telefone2 = new Telefone()
+telefone2.ddd = '21'
+telefone2.numero = '923456789'
+cliente.telefones.push(telefone2)
 
 let dependente = new Cliente()
 dependente.nome = `Isabel Cristina Leopoldina Augusta Micaela`
@@ -21,6 +30,10 @@ dependente.dataCadastro = new Date(1921, 10, 14)
 dependente.dataNascimento = new Date(1846, 6, 29)
 dependente.endereco = (cliente.endereco.clonar() as Endereco)
 dependente.titular = cliente
+cliente.telefones.forEach(tel =>
+    dependente.telefones.push(tel.clonar() as Telefone)
+)
+
 cliente.dependentes.push(dependente)
 
 console.log(cliente);
