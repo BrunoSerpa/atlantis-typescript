@@ -1,4 +1,4 @@
-/js
+/out
 *.js
 .vscode/
 /node_modules/
