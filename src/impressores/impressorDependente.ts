@@ -11,7 +11,7 @@ export default class ImpressorDependente implements Impressor {
     imprimir(): string {
         let impressao = `| Dependente:\n`
         + `| Nome: ${this.cliente.Nome}\n`
-        + `| Nome social: ${this.cliente.NomeSocial}\n`
+        + ((this.cliente.NomeSocial) ? `| Nome social: ${this.cliente.NomeSocial}\n` : ``)
         + `| Data de nascimento: ${this.cliente.DataNascimento.toLocaleDateString()}\n`
         + `| Data de cadastro: ${this.cliente.DataCadastro.toLocaleDateString()}`
         return impressao

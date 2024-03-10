@@ -1,7 +1,7 @@
 import Impressor from "../interfaces/impressor";
 import Cliente from "../modelos/cliente";
 import ImpressorDependente from "./impressorDependente";
-export default class ImpressaorDependentes implements Impressor {
+export default class ImpressorDependentes implements Impressor {
     private dependentes: Cliente[]
     private impressor!: Impressor
 
