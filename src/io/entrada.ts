@@ -23,6 +23,17 @@ export default class Entrada {
             return texto
             }
     }
+    public receberResposta(mensagem:string): string{
+        while (true){
+            let texto = this.prompt(mensagem).toUpperCase()
+            if (!['S','N'].includes(texto)){
+                console.log('Insira "S" ou "N" na sua resposta!')
+                continue
+            }
+            return texto
+        }
+    }
+
     public receberData(mensagem: string): Date {
         let dataEmissao: Date;
         while (true) {
