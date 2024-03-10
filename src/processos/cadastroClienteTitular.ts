@@ -2,25 +2,66 @@ import Processo from "../abstracoes/processo";
 import Armazem from "../dominio/armazem";
 import Cliente from "../modelos/cliente";
 import CadastrarDocumentosCliente from "./cadastrarDocumentosCliente";
+import CadastroClienteDependente from "./cadastroClienteDependente";
 import CadastroEnderecoTitular from "./cadastroEnderecoTitular";
+import CadastroTelefoneTitular from "./cadastroTelefoneTitular";
 
 export default class CadastroClienteTitular extends Processo {
+    private resposta: String
     processar(): void {
         console.log('Iniciando o cadastro de um novo cliente...')
-        let nome = this.entrada.receberTexto('Qual o nome do novo cliente?')
-        let nomeSocial = this.entrada.receberTexto('Qual o nome social do novo cliente?')
-        let dataNascimento = this.entrada.receberData('Qual a data de nascimento?')
-        let cliente = new Cliente(nome, nomeSocial, dataNascimento)
-
+        const nome = this.entrada.receberTexto(`Por favor, informe o nome do cliente: `)
+        const nomeSocial = this.receberPreferenciaNomeSocial
+        const dataNascimento = this.entrada.receberData('Qual a data de nascimento?')
+        const cliente = new Cliente(nome, nomeSocial, dataNascimento)
+        this.resposta = this.entrada.receberResposta('Deseja cadastrar um número de telefone?')
+        if (this.resposta === "S") {
+            while (true) {
+                this.processo = new CadastroTelefoneTitular(cliente)
+                this.processo.processar()
+                this.resposta = this.entrada.receberResposta('Deseja cadastrar mais algum número de telefone?')
+                if (this.resposta === "S") {
+                    continue
+                }
+                break
+            }
+        }
         this.processo = new CadastroEnderecoTitular(cliente)
         this.processo.processar()
-
-        this.processo = new CadastrarDocumentosCliente(cliente)
-        this.processo.processar()
-
-        let armazem = Armazem.InstanciaUnica
+        this.resposta = this.entrada.receberResposta('Deseja cadastrar um documento?')
+        if (this.resposta === "S") {
+            while (true) {
+                this.processo = new CadastrarDocumentosCliente(cliente)
+                this.processo.processar()
+                this.resposta = this.entrada.receberResposta('Deseja cadastrar mais algum documento?')
+                if (this.resposta === "S") {
+                    continue
+                }
+                break
+            }
+        }
+        this.resposta = this.entrada.receberResposta('Deseja cadastrar um dependente?')
+        if (this.resposta === "S") {
+            while (true) {
+                this.processo = new CadastroClienteDependente(cliente)
+                this.processo.processar()
+                this.resposta = this.entrada.receberResposta('Deseja cadastrar mais algum dependente?')
+                if (this.resposta === "S") {
+                    continue
+                }
+                break
+            }
+        }
+        const armazem = Armazem.InstanciaUnica
         armazem.Clientes.push(cliente)
-
         console.log('Finalizando o cadastro do cliente...')
+    }
+    private get receberPreferenciaNomeSocial(): string | undefined {
+        this.resposta = this.entrada.receberResposta("Prefere ser chamado pelo nome social? (S/N): ")
+        if (this.resposta === "S") {
+            return this.entrada.receberTexto("Por favor, informe o nome social do cliente: ")
+        } else if (this.resposta === "N") {
+            return
+        }
     }
 }
