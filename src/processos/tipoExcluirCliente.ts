@@ -1,6 +1,7 @@
 import Processo from "../abstracoes/processo";
 import MenuTipoExcluirCliente from "../menus/menuTipoExcluirCliente";
 import ExcluirClienteTitular from "./excluirClienteTitular";
+import ExcluirClienteDependente from "./excluirClienteDependente";
 import Principal from "./principal";
 
 export default class TipoExcluirCliente extends Processo {
@@ -18,7 +19,7 @@ export default class TipoExcluirCliente extends Processo {
                 this.processo.processar()
                 break
             case 2:
-                //this.processo = new ExcluirClienteDependente()
+                this.processo = new ExcluirClienteDependente()
                 this.processo.processar()
                 break
             case 0:
