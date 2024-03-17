@@ -47,7 +47,6 @@ export default class EscolherCliente extends Processo {
         } else {
             clientesEncontrados = this.encontrarDependente
         }
-        console.log(clientesEncontrados)
         if (clientesEncontrados.length > 1) {
             while (true){
                 console.clear()
