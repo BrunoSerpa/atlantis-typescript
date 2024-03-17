@@ -5,13 +5,13 @@ import Telefone from "./telefone"
 
 export default class Cliente implements Prototipo{
     private nome: string
-    private nomeSocial!: string
+    private nomeSocial: string | undefined
     private dataNascimento: Date
     private dataCadastro: Date
     private telefones: Telefone[] = []
     private endereco!: Endereco
     private documentos: Documento[] = []
-    private dependentes: Cliente[] = []
+    private dependentes: Cliente[] = [] 
     private titular!: Cliente
 
     constructor(nome: string, nomeSocial: string | undefined, dataNascimento: Date) {
@@ -31,7 +31,14 @@ export default class Cliente implements Prototipo{
     public get Dependentes() { return this.dependentes }
     public get Titular() { return this.titular }
 
+    public set Nome(nome:string) { this.nome =  nome}
+    public set NomeSocial(nomeSocial : string | undefined) { this.nomeSocial = nomeSocial }
+    public set DataNascimento(dataNascimento: Date) { this.dataNascimento = dataNascimento }
+    public set DataCadastro(dataCadastro: Date) { this.dataCadastro = dataCadastro}
+    public set Telefones(telefones: Telefone[]) { this.telefones = telefones }
     public set Endereco(endereco: Endereco) { this.endereco = endereco }
+    public set Documentos(documentos: Documento[])  {this.documentos = documentos}
+    public set Dependentes(dependentes: Cliente[])  {this.dependentes = dependentes}
     public set Titular(cliente: Cliente)  {this.titular = cliente}
     clonar(): Prototipo {
         let cliente = new Cliente(this.nome, this.nomeSocial, this.dataNascimento)
