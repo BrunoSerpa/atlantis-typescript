@@ -5,13 +5,14 @@ import CadastrarDocumentosCliente from "./cadastrarDocumentosCliente";
 import CadastroClienteDependente from "./cadastroClienteDependente";
 import CadastroEnderecoTitular from "./cadastroEnderecoTitular";
 import CadastroTelefoneTitular from "./cadastroTelefoneTitular";
+import PreferenciaNomeSocial from "./preferenciaNomeSocial";
 
 export default class CadastroClienteTitular extends Processo {
     private resposta: String
     processar(): void {
         console.log('Iniciando o cadastro de um novo cliente...')
         const nome = this.entrada.receberTexto(`Por favor, informe o nome do cliente: `)
-        const nomeSocial = this.receberPreferenciaNomeSocial
+        const nomeSocial = new PreferenciaNomeSocial().processar()
         const dataNascimento = this.entrada.receberData('Qual a data de nascimento?')
         const cliente = new Cliente(nome, nomeSocial, dataNascimento)
         this.resposta = this.entrada.receberResposta('Deseja cadastrar um número de telefone?')
@@ -55,13 +56,5 @@ export default class CadastroClienteTitular extends Processo {
         const armazem = Armazem.InstanciaUnica
         armazem.Clientes.push(cliente)
         console.log('Finalizando o cadastro do cliente...')
-    }
-    private get receberPreferenciaNomeSocial(): string | undefined {
-        this.resposta = this.entrada.receberResposta("Prefere ser chamado pelo nome social? (S/N): ")
-        if (this.resposta === "S") {
-            return this.entrada.receberTexto("Por favor, informe o nome social do cliente: ")
-        } else if (this.resposta === "N") {
-            return
-        }
     }
 }
