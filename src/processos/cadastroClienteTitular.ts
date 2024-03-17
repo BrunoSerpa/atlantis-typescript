@@ -4,7 +4,7 @@ import Cliente from "../modelos/cliente";
 import CadastrarDocumentosCliente from "./cadastrarDocumentosCliente";
 import CadastroClienteDependente from "./cadastroClienteDependente";
 import CadastroEnderecoTitular from "./cadastroEnderecoTitular";
-import CadastroTelefoneTitular from "./cadastroTelefoneTitular";
+import CadastroTelefone from "./cadastroTelefone";
 import PreferenciaNomeSocial from "./preferenciaNomeSocial";
 
 export default class CadastroClienteTitular extends Processo {
@@ -18,8 +18,7 @@ export default class CadastroClienteTitular extends Processo {
         this.resposta = this.entrada.receberResposta('Deseja cadastrar um número de telefone?')
         if (this.resposta === "S") {
             while (true) {
-                this.processo = new CadastroTelefoneTitular(cliente)
-                this.processo.processar()
+                cliente.Telefones.push(new CadastroTelefone().processar())
                 this.resposta = this.entrada.receberResposta('Deseja cadastrar mais algum número de telefone?')
                 if (this.resposta === "S") {
                     continue
