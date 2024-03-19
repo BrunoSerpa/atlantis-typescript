@@ -1,4 +1,5 @@
 import Processo from "../abstracoes/processo";
+import Armazem from "../dominio/armazem";
 import MenuEditarDocumentos from "../menus/menuEditarDocumentos";
 import Cliente from "../modelos/cliente";
 import Endereco from "../modelos/endereco";
@@ -44,6 +45,8 @@ export default class CadastroClienteDependente extends Processo {
             }
         }
         this.clienteTitular.Dependentes.push(cliente)
+        const armazem = Armazem.InstanciaUnica
+        armazem.Clientes.push(cliente)
         console.log('Finalizando o cadastro do cliente...')
     }
 }
