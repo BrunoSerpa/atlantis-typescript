@@ -1,7 +1,8 @@
 import Processo from "../abstracoes/processo";
 import Armazem from "../dominio/armazem";
+import MenuTipoDocumento from "../menus/menuTipoDocumento";
 import Cliente from "../modelos/cliente";
-import CadastrarDocumentosCliente from "./cadastrarDocumentosCliente";
+import CadastrarDocumento from "./cadastrarDocumento";
 import CadastroClienteDependente from "./cadastroClienteDependente";
 import CadastroEnderecoTitular from "./cadastroEnderecoTitular";
 import CadastroTelefone from "./cadastroTelefone";
@@ -31,13 +32,19 @@ export default class CadastroClienteTitular extends Processo {
         this.resposta = this.entrada.receberResposta('Deseja cadastrar um documento?')
         if (this.resposta === "S") {
             while (true) {
-                this.processo = new CadastrarDocumentosCliente(cliente)
-                this.processo.processar()
-                this.resposta = this.entrada.receberResposta('Deseja cadastrar mais algum documento?')
-                if (this.resposta === "S") {
-                    continue
+                new MenuTipoDocumento().mostrar()
+                let opcao = this.entrada.receberNumero('Qual opção desejada?');
+                if ([1, 2, 3].includes(opcao)) {
+                    cliente.Documentos.push(new CadastrarDocumento(opcao).processar());
+                } else if (opcao === 0) {
+                    break;
+                } else {
+                    console.log('Opção não entendida :(');
                 }
-                break
+                this.resposta = this.entrada.receberResposta('Deseja cadastrar mais algum documento? (S/N)');
+                if (this.resposta !== "S") {
+                    break;
+                }
             }
         }
         this.resposta = this.entrada.receberResposta('Deseja cadastrar um dependente?')
