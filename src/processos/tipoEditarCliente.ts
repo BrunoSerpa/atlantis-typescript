@@ -1,5 +1,6 @@
 import Processo from "../abstracoes/processo";
 import MenuTipoEditarCliente from "../menus/menuTipoEditarCliente";
+import EditarClienteTitular from "./editarClienteTitular";
 import Principal from "./principal";
 
 export default class TipoEditarCliente extends Processo {
@@ -13,7 +14,7 @@ export default class TipoEditarCliente extends Processo {
         
         switch (this.opcao) {
             case 1:
-                //this.processo = new EditarClienteTitular()
+                this.processo = new EditarClienteTitular()
                 this.processo.processar()
                 break
             case 2:
